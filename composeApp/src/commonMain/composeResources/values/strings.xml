@@ -8,12 +8,20 @@
     <string name="favourite">Favourite</string>
     <string name="no_search_result">Oops ,there aren't Search book for your query </string>
     <string name="no_saved_result">Oops ,You haven't saved any books yet</string>
-
     <string name="error_disk_full">Oops ,it seems like that your disk is full ..</string>
     <string name="error_unknown">Oops ,some thing went wrong</string>
     <string name="error_request_time_out">the request time out</string>
     <string name="error_no_internet">Couldn't reach server , Please check internet connection </string>
     <string name="error_to_many_requests"> your quota seems to be exceeded  </string>
     <string name="error_serializations">Couldn't parse data</string>
+    <string name="book_cover">Book Cover</string>
+    <string name="rating"> Rating</string>
+    <string name="languages">Languages</string>
+    <string name="pages">Pages</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="description_not_available">Description Not Available</string>
+    <string name="go_back">Go Back</string>
+    <string name="mark_as_favourite">Mark As Favourite</string>
+    <string name="remove_from_favourite">Remove From Favourite</string>
 
 </resources>

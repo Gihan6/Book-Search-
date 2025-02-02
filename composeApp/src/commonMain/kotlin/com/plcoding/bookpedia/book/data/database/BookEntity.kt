@@ -1,7 +1,11 @@
-package com.plcoding.bookpedia.book.domaine
+package com.plcoding.bookpedia.book.data.database
 
-data class Book(
-    val id:String,
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class BookEntity(
+   @PrimaryKey(autoGenerate = false) val id:String,
     val title:String,
     val imageUrl:String,
     val authors:List<String>,
@@ -13,5 +17,3 @@ data class Book(
     val numPages:Int?,
     val numEdition:Int
 )
-
-

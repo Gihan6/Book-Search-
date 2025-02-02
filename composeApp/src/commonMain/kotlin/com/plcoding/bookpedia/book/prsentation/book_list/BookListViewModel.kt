@@ -25,16 +25,18 @@ class BookListViewModel(private val repository: BookRepo) : ViewModel() {
     private val _state = MutableStateFlow(BookListState())
     val state = _state
         .onStart {
-            if (cashBookList.isEmpty()){
+            if (cashBookList.isEmpty()) {
                 observeSearchQuery()
             }
+            observeOnFavouriteBooks()
         }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
             _state.value
         )
-    private var searchJop:Job?=null
+    private var searchJop: Job? = null
+    private var observerFavouriteJob: Job? = null
 
     private var cashBookList: List<Book> = emptyList()
     fun onAction(action: BookListAction) {
@@ -70,7 +72,7 @@ class BookListViewModel(private val repository: BookRepo) : ViewModel() {
 
                     query.length >= 2 -> {
                         searchJop?.cancel()
-                        searchJop=searchBook(query)
+                        searchJop = searchBook(query)
                     }
 
                     else -> {}
@@ -107,4 +109,17 @@ class BookListViewModel(private val repository: BookRepo) : ViewModel() {
         }
     }
 
+    private suspend fun observeOnFavouriteBooks() {
+        observerFavouriteJob?.cancel()
+
+        observerFavouriteJob = repository.getFavouriteBook().onEach { favouriteBooks ->
+            _state.update {
+                it.copy(
+                    favouriteResult = favouriteBooks
+                )
+            }
+        }
+            .launchIn(viewModelScope)
+
+    }
 }

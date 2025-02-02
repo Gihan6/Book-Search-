@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.plcoding.bookpedia.book.domaine.Book
-import com.plcoding.bookpedia.book.domaine.books
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListScreen
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListState
 import com.plcoding.bookpedia.book.prsentation.book_list.components.BookSearchBar
@@ -46,5 +45,20 @@ fun BookListScreenPreview() {
         onAction = {
 
         }
+    )
+}
+private val books = (1..100).map {
+    Book(
+        id = "$it",
+        title = "book name $it",
+        imageUrl = "https://test.com",
+        authors = listOf("Gian"),
+        description = "description $it",
+        language = emptyList(),
+        firstPublishYear = null,
+        averageRating = 2.3676,
+        ratingCount = 5,
+        numPages = 6,
+        numEdition = 3
     )
 }
