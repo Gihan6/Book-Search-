@@ -12,21 +12,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +34,6 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import cmp_bookpedia.composeapp.generated.resources.Res
@@ -48,6 +43,7 @@ import cmp_bookpedia.composeapp.generated.resources.go_back
 import cmp_bookpedia.composeapp.generated.resources.mark_as_favourite
 import cmp_bookpedia.composeapp.generated.resources.remove_from_favourite
 import coil3.compose.rememberAsyncImagePainter
+import com.plcoding.bookpedia.book.prsentation.animation.PulseAnimation
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import com.plcoding.bookpedia.core.presentation.DesertWhite
 import com.plcoding.bookpedia.core.presentation.SandYellow
@@ -79,7 +75,7 @@ fun BlurredImageBackGround(
         }
     )
 
-    Box(modifier=modifier) {
+    Box(modifier = modifier) {
 
         Column(
             modifier = Modifier.fillMaxSize()
@@ -130,9 +126,6 @@ fun BlurredImageBackGround(
                 modifier = Modifier.height(200.dp)
                     .aspectRatio(2 / 3f),
                 shape = RoundedCornerShape(8.dp),
-                colors = CardDefaults.elevatedCardColors(
-                    containerColor = Color.Transparent
-                ),
                 elevation = CardDefaults.elevatedCardElevation(
                     defaultElevation = 15.dp
                 )
@@ -141,7 +134,16 @@ fun BlurredImageBackGround(
                     targetState = imageLoadResult
                 ) { result ->
                     when (result) {
-                        null -> CircularProgressIndicator()
+                        null -> Box(
+                            modifier = modifier,
+                            contentAlignment = Alignment.Center
+                        ) {
+                            PulseAnimation(
+                                modifier =
+                                Modifier.size(60.dp)
+                            )
+                        }
+
                         else -> {
                             Box() {
                                 Image(
