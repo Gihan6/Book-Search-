@@ -21,6 +21,7 @@ import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailScreenRoot
 import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailViewModel
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListScreenRoot
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListViewModel
+import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -34,7 +35,14 @@ fun App() {
             navController = navController,
             startDestination = Route.BookGraph
         ) {
-            navigation<Route.BookGraph>(startDestination = Route.BookList) {
+            navigation<Route.BookGraph>(startDestination = Route.SplashScreen) {
+
+                composable<Route.SplashScreen>{
+                    SplashScreen (navToMain = {
+                           navController.navigate(Route.BookList)
+                    })
+
+                }
                 composable<Route.BookList>(
                     exitTransition = {
                         slideOutHorizontally ()
