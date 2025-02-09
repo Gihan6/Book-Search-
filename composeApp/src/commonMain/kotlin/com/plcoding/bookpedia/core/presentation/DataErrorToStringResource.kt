@@ -6,6 +6,8 @@ import cmp_bookpedia.composeapp.generated.resources.error_no_internet
 import cmp_bookpedia.composeapp.generated.resources.error_serializations
 import cmp_bookpedia.composeapp.generated.resources.error_to_many_requests
 import cmp_bookpedia.composeapp.generated.resources.error_unknown
+import cmp_bookpedia.composeapp.generated.resources.user_already_exist
+import cmp_bookpedia.composeapp.generated.resources.user_not_have_account
 import com.plcoding.bookpedia.book.domaine.DataError
 
 
@@ -20,6 +22,8 @@ fun DataError.toUiText():UiText{
         DataError.Remote.SERVER -> Res.string.error_unknown
         DataError.Remote.SERIALIZATION -> Res.string.error_serializations
         DataError.Remote.UNKNOWN -> Res.string.error_unknown
-    }
+        DataError.Local.ALREADY_REGISTER -> Res.string.user_already_exist
+      DataError.Local.NOT_FOUND_USER -> Res.string.user_not_have_account
+  }
     return UiText.StringResourceId(stringRes)
 }

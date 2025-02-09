@@ -6,10 +6,15 @@ import com.plcoding.bookpedia.book.data.database.FavouriteBookDatabase
 import com.plcoding.bookpedia.book.data.network.KtorRemoteBookDataSource
 import com.plcoding.bookpedia.book.data.network.RemoteBookDataSource
 import com.plcoding.bookpedia.book.data.repository.BookRepository
+import com.plcoding.bookpedia.book.data.repository.UserRepository
 import com.plcoding.bookpedia.book.domaine.BookRepo
+import com.plcoding.bookpedia.book.domaine.UserRepo
 import com.plcoding.bookpedia.book.prsentation.SelectBookViewModel
 import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailViewModel
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListViewModel
+import com.plcoding.bookpedia.book.prsentation.login.LoginViewModel
+import com.plcoding.bookpedia.book.prsentation.register.RegisterViewModel
+import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashViewModel
 import com.plcoding.bookpedia.core.data.HttpClientFactory
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -25,6 +30,7 @@ val shareModule= module {
     }
     singleOf(::KtorRemoteBookDataSource).bind<RemoteBookDataSource>()
     singleOf(::BookRepository).bind<BookRepo>()
+    singleOf(::UserRepository).bind<UserRepo>()
 
     single {
         get<DataBaseFactory>().create()
@@ -32,9 +38,13 @@ val shareModule= module {
             .build()
     }
     single { get<FavouriteBookDatabase>().favouriteBookDao }
+    single { get<FavouriteBookDatabase>().userDao }
     viewModelOf(::BookListViewModel)
     viewModelOf(::SelectBookViewModel)
     viewModelOf(::BookDetailViewModel)
+    viewModelOf(::SplashViewModel)
+    viewModelOf(::RegisterViewModel)
+    viewModelOf(::LoginViewModel)
 
 
 

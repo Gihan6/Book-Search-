@@ -2,7 +2,6 @@ package com.plcoding.bookpedia.book.data.repository
 
 import androidx.sqlite.SQLiteException
 import com.plcoding.bookpedia.book.data.database.FavouriteBookDao
-import com.plcoding.bookpedia.book.data.database.FavouriteBookDatabase
 import com.plcoding.bookpedia.book.data.mappers.toBook
 import com.plcoding.bookpedia.book.data.mappers.toBookEntity
 import com.plcoding.bookpedia.book.data.network.RemoteBookDataSource

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <resources>
+    <string name="app_name">Book Search</string>
     <string name="search_hint">Search...</string>
     <string name="close_icon">Clear</string>
     <string name="search_icon">search Icon</string>
@@ -13,6 +14,7 @@
     <string name="error_request_time_out">the request time out</string>
     <string name="error_no_internet">Couldn't reach server , Please check internet connection </string>
     <string name="error_to_many_requests"> your quota seems to be exceeded  </string>
+    <string name="user_already_exist">User Already Exist</string>
     <string name="error_serializations">Couldn't parse data</string>
     <string name="book_cover">Book Cover</string>
     <string name="rating"> Rating</string>
@@ -23,5 +25,20 @@
     <string name="go_back">Go Back</string>
     <string name="mark_as_favourite">Mark As Favourite</string>
     <string name="remove_from_favourite">Remove From Favourite</string>
+    <string name="logo_icon">Logo Icon</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="full_name">Full Name</string>
+    <string name="password">Password</string>
+    <string name="login_to_your_account">Login to Your Account </string>
+    <string name="sign_in">SignIn</string>
+    <string name="not_have_account">Don't have an account?</string>
+    <string name="sign_up">SignUp</string>
+    <string name="create_your_account">Create Your Account</string>
+    <string name="please_enter_complete_data">Please Enter Complete Data</string>
+    <string name="ok">OK</string>
+    <string name="alert">Alert</string>
+    <string name="user_not_have_account">Email Or Password is Wrong</string>
+
 
 </resources>

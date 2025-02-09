@@ -1,5 +1,7 @@
 package com.plcoding.bookpedia.book.domaine
 
+import androidx.room.Entity
+import com.plcoding.bookpedia.book.data.database.UserEntity
 import com.plcoding.bookpedia.core.domain.EmptyResult
 import com.plcoding.bookpedia.core.domain.Result
 import kotlinx.coroutines.flow.Flow

@@ -12,6 +12,36 @@ import com.plcoding.bookpedia.book.domaine.Book
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListScreen
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListState
 import com.plcoding.bookpedia.book.prsentation.book_list.components.BookSearchBar
+import com.plcoding.bookpedia.book.prsentation.login.LoginScreen
+import com.plcoding.bookpedia.book.prsentation.login.LoginStates
+import com.plcoding.bookpedia.book.prsentation.naviagation_drawer.NavigationScreen
+import com.plcoding.bookpedia.book.prsentation.register.RegisterScreen
+
+@Preview
+@Composable
+fun NavigationDrawer(){
+    NavigationScreen()
+}
+@Preview
+@Composable
+fun Register() {
+    //   RegisterScreen()
+}
+
+@Preview
+@Composable
+fun Login() {
+    LoginScreen(
+        modifier = Modifier,
+        state = LoginStates(
+            isLogin = false,
+            isLoading = false,
+            error = null
+        ),
+        onAction = {
+
+        })
+}
 
 @Preview(
     name = "Search bar"
@@ -39,14 +69,15 @@ fun BookSearchBarPreview() {
 fun BookListScreenPreview() {
 
     BookListScreen(
-        state= BookListState(
+        state = BookListState(
             searchResult = books
-            ),
+        ),
         onAction = {
 
         }
     )
 }
+
 private val books = (1..100).map {
     Book(
         id = "$it",

@@ -1,7 +1,9 @@
 package com.plcoding.bookpedia.app
 
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,7 +23,15 @@ import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailScreenRoot
 import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailViewModel
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListScreenRoot
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListViewModel
+import com.plcoding.bookpedia.book.prsentation.login.LoginScreen
+import com.plcoding.bookpedia.book.prsentation.login.LoginScreenRoot
+import com.plcoding.bookpedia.book.prsentation.login.LoginViewModel
+import com.plcoding.bookpedia.book.prsentation.register.RegisterScreen
+import com.plcoding.bookpedia.book.prsentation.register.RegisterScreenRoot
+import com.plcoding.bookpedia.book.prsentation.register.RegisterViewModel
 import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashScreen
+import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashScreenRoot
+import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -37,18 +47,36 @@ fun App() {
         ) {
             navigation<Route.BookGraph>(startDestination = Route.SplashScreen) {
 
-                composable<Route.SplashScreen>{
-                    SplashScreen (navToMain = {
-                           navController.navigate(Route.BookList)
-                    })
+                composable<Route.SplashScreen>(
+                    enterTransition = {
+                        slideInVertically { initialOfSet ->
+                            initialOfSet
+                        }
+                    },
+                    exitTransition = {
+                        slideOutVertically { initialOfSet ->
+                            initialOfSet
+                        }
+                    }
+                ) {
+                    val viewModel = koinViewModel<SplashViewModel>()
+                    SplashScreenRoot(
+                        viewModel = viewModel,
+                        navToMain = {
+                            navController.navigate(Route.BookList)
+                        },
+                        navToLogin = {
+                            navController.navigate(Route.Login)
+                        }
+                    )
 
                 }
                 composable<Route.BookList>(
                     exitTransition = {
-                        slideOutHorizontally ()
+                        slideOutHorizontally()
                     },
                     popEnterTransition = {
-                        slideInHorizontally ()
+                        slideInHorizontally()
                     }
                 ) {
                     val viewModel = koinViewModel<BookListViewModel>()
@@ -70,7 +98,7 @@ fun App() {
                 }
                 composable<Route.BookDetail>(
                     enterTransition = {
-                        slideInHorizontally{ initialOfSet ->
+                        slideInHorizontally { initialOfSet ->
                             initialOfSet
                         }
                     },
@@ -100,6 +128,54 @@ fun App() {
 
                     )
 
+                }
+                composable<Route.Login>(
+                    enterTransition = {
+                        slideInHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    },
+                    exitTransition = {
+                        slideOutHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    }
+                ) {
+
+                    val viewModel = koinViewModel<LoginViewModel>()
+                    LoginScreenRoot(
+                        viewModel = viewModel,
+                        navigateToRegister = {
+                            navController.navigate(Route.Register)
+                        },
+                        navigateToMain = {
+                            navController.navigate(Route.BookList)
+
+                        })
+                }
+                composable<Route.Register>(
+                    enterTransition = {
+                        slideInHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    },
+                    exitTransition = {
+                        slideOutHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    }
+                ) {
+                    val viewModel = koinViewModel<RegisterViewModel>()
+
+
+                    RegisterScreenRoot(
+                        viewModel = viewModel,
+                        onBackClick = {
+                            navController.navigateUp()
+                        },
+                        navigateToMain = {
+                            navController.navigate(Route.BookList)
+                        })
                 }
             }
         }

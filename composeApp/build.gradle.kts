@@ -47,7 +47,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.core.splashscreen)
+
 
         }
         commonMain.dependencies {
@@ -72,7 +72,7 @@ kotlin {
 
             implementation(libs.bundles.ktor)
             implementation(libs.bundles.coil)
-            implementation(libs.core.splashscreen)
+
 
         }
         desktopMain.dependencies {

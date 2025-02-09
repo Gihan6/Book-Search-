@@ -6,13 +6,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(
-    entities = [BookEntity::class],
+    entities = [BookEntity::class,UserEntity::class],
     version = 1
 )
 @TypeConverters(StringListTypeConverter::class)
 @ConstructedBy(BookDatabaseConstructor::class)
 abstract class FavouriteBookDatabase :RoomDatabase(){
     abstract val favouriteBookDao:FavouriteBookDao
+    abstract val userDao:UserDao
 
     companion object{
        const val DB_NAME="book.db"

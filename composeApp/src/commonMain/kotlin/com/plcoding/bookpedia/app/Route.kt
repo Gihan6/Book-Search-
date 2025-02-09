@@ -15,4 +15,10 @@ interface Route {
 
     @Serializable
     data class BookDetail(val id:String): Route
+
+    @Serializable
+    data object Login :Route
+
+    @Serializable
+    data object Register :Route
 }
