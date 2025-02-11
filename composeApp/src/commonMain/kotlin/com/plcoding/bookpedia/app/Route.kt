@@ -6,6 +6,8 @@ interface Route {
 
     @Serializable
     data object BookGraph: Route
+    @Serializable
+    data object Navigation: Route
 
     @Serializable
     data object SplashScreen:Route
@@ -21,4 +23,10 @@ interface Route {
 
     @Serializable
     data object Register :Route
+
+    @Serializable
+    data object Setting:Route
+
+    @Serializable
+    data object UserProfile:Route
 }

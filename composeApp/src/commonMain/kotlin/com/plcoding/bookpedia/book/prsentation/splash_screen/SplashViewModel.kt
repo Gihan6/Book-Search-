@@ -2,6 +2,7 @@ package com.plcoding.bookpedia.book.prsentation.splash_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.plcoding.bookpedia.app.Utils.Companion.loginUser
 import com.plcoding.bookpedia.book.domaine.UserRepo
 import com.plcoding.bookpedia.core.domain.onError
 import com.plcoding.bookpedia.core.domain.onSuccess
@@ -27,6 +28,7 @@ class SplashViewModel(val repo: UserRepo) : ViewModel() {
     fun ifUserLogin() {
         viewModelScope.launch {
             repo.getLoginUser().onSuccess { user ->
+                loginUser=user
                 _state.update {
                     it.copy(isLogin = if (user == null) false else true)
                 }

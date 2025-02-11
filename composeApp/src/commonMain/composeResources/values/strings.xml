@@ -39,6 +39,12 @@
     <string name="ok">OK</string>
     <string name="alert">Alert</string>
     <string name="user_not_have_account">Email Or Password is Wrong</string>
+    <string name="user_icon">User Icon</string>
+    <string name="logout">LogOut</string>
+    <string name="home">Home</string>
+    <string name="setting">Setting</string>
+    <string name="menu">Menu </string>
+    <string name="book_list">Home</string>
 
 
 </resources>

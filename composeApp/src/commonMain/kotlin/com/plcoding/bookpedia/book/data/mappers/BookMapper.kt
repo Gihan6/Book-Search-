@@ -65,7 +65,7 @@ fun BookEntity.toBook(): Book {
 fun UserEntity.toUser(): User {
     return User(
         email = email,
-        name = phone,
+        name = name,
         phone = phone,
         password = password,
         isLogin=isLogin
@@ -74,7 +74,7 @@ fun UserEntity.toUser(): User {
 fun User.toUser(): UserEntity {
     return UserEntity(
         email = email,
-        name = phone,
+        name = name,
         phone = phone,
         password = password,
         isLogin=isLogin

@@ -14,13 +14,14 @@ import com.plcoding.bookpedia.book.prsentation.book_list.BookListState
 import com.plcoding.bookpedia.book.prsentation.book_list.components.BookSearchBar
 import com.plcoding.bookpedia.book.prsentation.login.LoginScreen
 import com.plcoding.bookpedia.book.prsentation.login.LoginStates
-import com.plcoding.bookpedia.book.prsentation.naviagation_drawer.NavigationScreen
-import com.plcoding.bookpedia.book.prsentation.register.RegisterScreen
+
 
 @Preview
 @Composable
 fun NavigationDrawer(){
-    NavigationScreen()
+//    NavigationScreen(navigate = {}){
+
+//    }
 }
 @Preview
 @Composable

@@ -21,15 +21,11 @@ import com.plcoding.bookpedia.book.prsentation.SelectBookViewModel
 import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailAction
 import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailScreenRoot
 import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailViewModel
-import com.plcoding.bookpedia.book.prsentation.book_list.BookListScreenRoot
-import com.plcoding.bookpedia.book.prsentation.book_list.BookListViewModel
-import com.plcoding.bookpedia.book.prsentation.login.LoginScreen
 import com.plcoding.bookpedia.book.prsentation.login.LoginScreenRoot
 import com.plcoding.bookpedia.book.prsentation.login.LoginViewModel
-import com.plcoding.bookpedia.book.prsentation.register.RegisterScreen
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.AppNavGraph
 import com.plcoding.bookpedia.book.prsentation.register.RegisterScreenRoot
 import com.plcoding.bookpedia.book.prsentation.register.RegisterViewModel
-import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashScreen
 import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashScreenRoot
 import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -63,7 +59,7 @@ fun App() {
                     SplashScreenRoot(
                         viewModel = viewModel,
                         navToMain = {
-                            navController.navigate(Route.BookList)
+                            navController.navigate(Route.Navigation)
                         },
                         navToLogin = {
                             navController.navigate(Route.Login)
@@ -71,30 +67,14 @@ fun App() {
                     )
 
                 }
-                composable<Route.BookList>(
-                    exitTransition = {
-                        slideOutHorizontally()
-                    },
-                    popEnterTransition = {
-                        slideInHorizontally()
-                    }
-                ) {
-                    val viewModel = koinViewModel<BookListViewModel>()
+
+                composable<Route.Navigation>{
                     val selectedBookViewModel =
                         it.sharedKoinViewModel<SelectBookViewModel>(navController)
-                    //Appear when enter screen for first time or back
-                    LaunchedEffect(true) {
-                        selectedBookViewModel.onSelectedBook(null)
-                    }
-                    BookListScreenRoot(
-                        viewModel = viewModel,
-                        onBookClick = { book ->
-                            selectedBookViewModel.onSelectedBook(book)
-                            navController.navigate(Route.BookDetail(book.id))
-
-                        }
-
-                    )
+                    AppNavGraph(goToBookDetail = {book->
+                        selectedBookViewModel.onSelectedBook(book)
+                        navController.navigate(Route.BookDetail(book.id))
+                    })
                 }
                 composable<Route.BookDetail>(
                     enterTransition = {
@@ -177,6 +157,7 @@ fun App() {
                             navController.navigate(Route.BookList)
                         })
                 }
+
             }
         }
 
@@ -185,7 +166,7 @@ fun App() {
 }
 
 @Composable
-private inline fun <reified T : ViewModel> NavBackStackEntry.sharedKoinViewModel(
+inline fun <reified T : ViewModel> NavBackStackEntry.sharedKoinViewModel(
     navController: NavController
 ): T {
     val navGraphRoute = destination.parent?.route ?: return koinViewModel<T>()

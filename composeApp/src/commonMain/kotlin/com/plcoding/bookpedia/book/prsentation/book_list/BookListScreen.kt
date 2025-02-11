@@ -100,7 +100,7 @@ fun BookListScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().background(DarkBlue).statusBarsPadding(),
+        modifier = Modifier.fillMaxSize().background(DarkBlue).statusBarsPadding().padding(top = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
