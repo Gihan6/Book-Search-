@@ -38,56 +38,45 @@ fun App() {
     MaterialTheme {
         val navController = rememberNavController()
         NavHost(
-            navController = navController,
-            startDestination = Route.BookGraph
+            navController = navController, startDestination = Route.BookGraph
         ) {
             navigation<Route.BookGraph>(startDestination = Route.SplashScreen) {
 
-                composable<Route.SplashScreen>(
-                    enterTransition = {
-                        slideInVertically { initialOfSet ->
-                            initialOfSet
-                        }
-                    },
-                    exitTransition = {
-                        slideOutVertically { initialOfSet ->
-                            initialOfSet
-                        }
+                composable<Route.SplashScreen>(enterTransition = {
+                    slideInVertically { initialOfSet ->
+                        initialOfSet
                     }
-                ) {
+                }, exitTransition = {
+                    slideOutVertically { initialOfSet ->
+                        initialOfSet
+                    }
+                }) {
                     val viewModel = koinViewModel<SplashViewModel>()
-                    SplashScreenRoot(
-                        viewModel = viewModel,
-                        navToMain = {
-                            navController.navigate(Route.Navigation)
-                        },
-                        navToLogin = {
-                            navController.navigate(Route.Login)
-                        }
-                    )
+                    SplashScreenRoot(viewModel = viewModel, navToMain = {
+                        navController.navigate(Route.Navigation)
+                    }, navToLogin = {
+                        navController.navigate(Route.Login)
+                    })
 
                 }
 
-                composable<Route.Navigation>{
+                composable<Route.Navigation> {
                     val selectedBookViewModel =
                         it.sharedKoinViewModel<SelectBookViewModel>(navController)
-                    AppNavGraph(goToBookDetail = {book->
+                    AppNavGraph(goToBookDetail = { book ->
                         selectedBookViewModel.onSelectedBook(book)
                         navController.navigate(Route.BookDetail(book.id))
                     })
                 }
-                composable<Route.BookDetail>(
-                    enterTransition = {
-                        slideInHorizontally { initialOfSet ->
-                            initialOfSet
-                        }
-                    },
-                    exitTransition = {
-                        slideOutHorizontally { initialOfSet ->
-                            initialOfSet
-                        }
+                composable<Route.BookDetail>(enterTransition = {
+                    slideInHorizontally { initialOfSet ->
+                        initialOfSet
                     }
-                ) {
+                }, exitTransition = {
+                    slideOutHorizontally { initialOfSet ->
+                        initialOfSet
+                    }
+                }) {
                     val selectedBookViewModel =
                         it.sharedKoinViewModel<SelectBookViewModel>(navController)
                     val selectedBook by selectedBookViewModel.selectedBook.collectAsStateWithLifecycle()
@@ -96,66 +85,47 @@ fun App() {
                     LaunchedEffect(selectedBook) {
                         selectedBook?.let { book ->
                             viewModel.onAction(BookDetailAction.OnBookChange(book))
-
                         }
                     }
-
-                    BookDetailScreenRoot(
-                        viewModel = viewModel,
-                        onBackClick = {
-                            navController.navigateUp()
-                        }
-
-                    )
-
+                    BookDetailScreenRoot(viewModel = viewModel, onBackClick = {
+                        navController.navigateUp()
+                    })
                 }
-                composable<Route.Login>(
-                    enterTransition = {
-                        slideInHorizontally { initialOfSet ->
-                            initialOfSet
-                        }
-                    },
-                    exitTransition = {
-                        slideOutHorizontally { initialOfSet ->
-                            initialOfSet
-                        }
+                composable<Route.Login>(enterTransition = {
+                    slideInHorizontally { initialOfSet ->
+                        initialOfSet
                     }
-                ) {
+                }, exitTransition = {
+                    slideOutHorizontally { initialOfSet ->
+                        initialOfSet
+                    }
+                }) {
 
                     val viewModel = koinViewModel<LoginViewModel>()
-                    LoginScreenRoot(
-                        viewModel = viewModel,
-                        navigateToRegister = {
-                            navController.navigate(Route.Register)
-                        },
-                        navigateToMain = {
-                            navController.navigate(Route.BookList)
+                    LoginScreenRoot(viewModel = viewModel, navigateToRegister = {
+                        navController.navigate(Route.Register)
+                    }, navigateToMain = {
+                        navController.navigate(Route.BookList)
 
-                        })
+                    })
                 }
-                composable<Route.Register>(
-                    enterTransition = {
-                        slideInHorizontally { initialOfSet ->
-                            initialOfSet
-                        }
-                    },
-                    exitTransition = {
-                        slideOutHorizontally { initialOfSet ->
-                            initialOfSet
-                        }
+                composable<Route.Register>(enterTransition = {
+                    slideInHorizontally { initialOfSet ->
+                        initialOfSet
                     }
-                ) {
+                }, exitTransition = {
+                    slideOutHorizontally { initialOfSet ->
+                        initialOfSet
+                    }
+                }) {
                     val viewModel = koinViewModel<RegisterViewModel>()
 
 
-                    RegisterScreenRoot(
-                        viewModel = viewModel,
-                        onBackClick = {
-                            navController.navigateUp()
-                        },
-                        navigateToMain = {
-                            navController.navigate(Route.BookList)
-                        })
+                    RegisterScreenRoot(viewModel = viewModel, onBackClick = {
+                        navController.navigateUp()
+                    }, navigateToMain = {
+                        navController.navigate(Route.BookList)
+                    })
                 }
 
             }
