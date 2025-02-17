@@ -45,6 +45,10 @@
     <string name="setting">Setting</string>
     <string name="menu">Menu </string>
     <string name="book_list">Home</string>
+    <string name="camera_icon">Camera Icon</string>
+    <string name="edit_icon">Edit</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change Password </string>
 
 
 </resources>

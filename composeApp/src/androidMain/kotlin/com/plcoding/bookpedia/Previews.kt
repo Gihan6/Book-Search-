@@ -8,25 +8,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.plcoding.bookpedia.app.Route
 import com.plcoding.bookpedia.book.domaine.Book
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListScreen
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListState
 import com.plcoding.bookpedia.book.prsentation.book_list.components.BookSearchBar
 import com.plcoding.bookpedia.book.prsentation.login.LoginScreen
 import com.plcoding.bookpedia.book.prsentation.login.LoginStates
-
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.AppNavGraph
+import com.plcoding.bookpedia.book.prsentation.register.RegisterScreen
+import com.plcoding.bookpedia.book.prsentation.register.RegisterState
+import com.plcoding.bookpedia.book.prsentation.user_profile.UserProfileScreen
 
 @Preview
 @Composable
+fun UserProfile(){
+    UserProfileScreen()
+}
+@Preview
+@Composable
 fun NavigationDrawer(){
-//    NavigationScreen(navigate = {}){
-
-//    }
+    AppNavGraph (goToBookDetail = {})
 }
 @Preview
 @Composable
 fun Register() {
-    //   RegisterScreen()
+       RegisterScreen(
+           modifier = Modifier,
+           state = RegisterState(isLoading = false,registerSuccess = false,null),
+           onAction = {
+
+           }
+       )
 }
 
 @Preview

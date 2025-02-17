@@ -79,11 +79,7 @@ fun RegisterScreenRoot(
             }
 
         }
-
-
     )
-
-
 }
 
 @Composable

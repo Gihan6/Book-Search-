@@ -105,8 +105,7 @@ fun App() {
                     LoginScreenRoot(viewModel = viewModel, navigateToRegister = {
                         navController.navigate(Route.Register)
                     }, navigateToMain = {
-                        navController.navigate(Route.BookList)
-
+                        navController.navigate(Route.Navigation)
                     })
                 }
                 composable<Route.Register>(enterTransition = {
@@ -119,12 +118,10 @@ fun App() {
                     }
                 }) {
                     val viewModel = koinViewModel<RegisterViewModel>()
-
-
                     RegisterScreenRoot(viewModel = viewModel, onBackClick = {
                         navController.navigateUp()
                     }, navigateToMain = {
-                        navController.navigate(Route.BookList)
+                        navController.navigate(Route.Navigation)
                     })
                 }
 
