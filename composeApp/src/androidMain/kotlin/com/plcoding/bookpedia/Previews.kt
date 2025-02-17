@@ -16,6 +16,7 @@ import com.plcoding.bookpedia.book.prsentation.book_list.components.BookSearchBa
 import com.plcoding.bookpedia.book.prsentation.login.LoginScreen
 import com.plcoding.bookpedia.book.prsentation.login.LoginStates
 import com.plcoding.bookpedia.book.prsentation.nav_drawer.AppNavGraph
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.NavDrawerState
 import com.plcoding.bookpedia.book.prsentation.register.RegisterScreen
 import com.plcoding.bookpedia.book.prsentation.register.RegisterState
 import com.plcoding.bookpedia.book.prsentation.user_profile.UserProfileScreen
@@ -28,7 +29,12 @@ fun UserProfile(){
 @Preview
 @Composable
 fun NavigationDrawer(){
-    AppNavGraph (goToBookDetail = {})
+    AppNavGraph (
+        onAction = {
+
+        },
+        state = NavDrawerState(null)
+    )
 }
 @Preview
 @Composable

@@ -1,8 +1,6 @@
 package com.plcoding.bookpedia.book.prsentation.nav_drawer
 
 import com.plcoding.bookpedia.app.Route
-import com.plcoding.bookpedia.app.sharedKoinViewModel
-import com.plcoding.bookpedia.book.prsentation.SelectBookViewModel
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListScreenRoot
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListViewModel
 import com.plcoding.bookpedia.book.prsentation.setting.SettingScreen
@@ -19,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,6 +25,9 @@ import androidx.navigation.compose.rememberNavController
 import cmp_bookpedia.composeapp.generated.resources.Res
 import cmp_bookpedia.composeapp.generated.resources.menu
 import com.plcoding.bookpedia.book.domaine.Book
+import com.plcoding.bookpedia.book.prsentation.book_list.BookListAction
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.component.AppDrawer
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.component.AppNavigationActions
 import com.plcoding.bookpedia.book.prsentation.user_profile.UserProfileScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -33,12 +35,33 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+fun AppNavGraphRoot(viewModel: NavDrawerViewModel,goToBookDetail:(Book)->Unit,
+                    logOut:()->Unit){
+    val state by viewModel.state.collectAsStateWithLifecycle()
+   if(state.isLogout){
+       logOut()
+   }
+    AppNavGraph(
+        onAction = {action ->
+            when(action){
+                is NavDrawerAction.OnBookClick ->goToBookDetail(action.book)
+                else ->{}
+            }
+            viewModel.onAction(action)
+        },
+        state = state
+    )
+
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun AppNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-    goToBookDetail:(Book)->Unit
+    onAction: (NavDrawerAction) -> Unit,
+    state: NavDrawerState
 ) {
     val navigationActions = remember(navController) {
         AppNavigationActions(navController)
@@ -46,17 +69,29 @@ fun AppNavGraph(
 
     ModalNavigationDrawer(drawerContent = {
         AppDrawer(
-            navigateToHome = {
-                navigationActions.navigateToHome()
-            },
-            navigateToSettings = {
-                navigationActions.navigateToSettings()
-            },
-            navigateToUserProfile = {
-                navigationActions.navigateToUserProfile()
+            onActions = {action ->
+                when(action){
+                   is NavDrawerAction.OnHomeClick -> {
+                       navigationActions.navigateToHome()
+
+                   }
+                   is  NavDrawerAction.OnSettingClick ->{
+                       navigationActions.navigateToSettings()
+
+                   }
+                  is   NavDrawerAction.OnUserClick -> {
+                      navigationActions.navigateToUserProfile()
+                    }
+                    else ->{
+                        onAction(action)
+                    }
+                }
+
+
             },
             closeDrawer = { coroutineScope.launch { drawerState.close() } },
-            modifier = Modifier
+            modifier = Modifier,
+            state = state
         )
     }, drawerState = drawerState) {
         Scaffold(
@@ -89,7 +124,7 @@ fun AppNavGraph(
                     BookListScreenRoot(
                         viewModel = viewModel,
                         onBookClick = { book ->
-                            goToBookDetail(book)
+                            onAction(NavDrawerAction.OnBookClick(book))
 
                         }
                     )

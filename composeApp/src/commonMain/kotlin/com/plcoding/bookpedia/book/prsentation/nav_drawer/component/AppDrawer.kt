@@ -1,4 +1,4 @@
-package com.plcoding.bookpedia.book.prsentation.nav_drawer
+package com.plcoding.bookpedia.book.prsentation.nav_drawer.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -36,8 +36,9 @@ import cmp_bookpedia.composeapp.generated.resources.logout_light
 import cmp_bookpedia.composeapp.generated.resources.setting
 import cmp_bookpedia.composeapp.generated.resources.user
 import cmp_bookpedia.composeapp.generated.resources.user_icon
-import com.plcoding.bookpedia.app.Route
 import com.plcoding.bookpedia.app.Utils.Companion.loginUser
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.NavDrawerAction
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.NavDrawerState
 import com.plcoding.bookpedia.core.presentation.DarkBlue
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -45,10 +46,9 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun AppDrawer(
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit = {},
-    navigateToSettings: () -> Unit = {},
-    navigateToUserProfile: () -> Unit={},
-    closeDrawer: () -> Unit = {}
+    onActions: (NavDrawerAction)->Unit,
+    closeDrawer: () -> Unit = {},
+    state:NavDrawerState
 ) {
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)
@@ -60,7 +60,7 @@ fun AppDrawer(
                 IconButton(modifier = modifier.size(80.dp)
                     .align(Alignment.CenterHorizontally),
                     onClick = {
-                        navigateToUserProfile()
+                        onActions(NavDrawerAction.OnUserClick)
                         closeDrawer()
                     }) {
                     Image(
@@ -70,7 +70,7 @@ fun AppDrawer(
                 }
 
                 Text(
-                    text = loginUser?.name ?: "",
+                    text = state.user?.name ?: "",
                     color = DarkBlue,
                     style = MaterialTheme.typography.titleLarge,
                     modifier = modifier.align(Alignment.CenterHorizontally).padding(20.dp)
@@ -88,7 +88,7 @@ fun AppDrawer(
                     selected = 0 == selectedItemIndex,
                     onClick = {
                         selectedItemIndex=0
-                        navigateToHome()
+                        onActions(NavDrawerAction.OnHomeClick)
                         closeDrawer()
 
                     },
@@ -119,7 +119,7 @@ fun AppDrawer(
                     selected = 1 == selectedItemIndex,
                     onClick = {
                         selectedItemIndex=1
-                        navigateToSettings()
+                        onActions(NavDrawerAction.OnSettingClick)
                         closeDrawer()
                     },
                     icon = {
@@ -156,6 +156,7 @@ fun AppDrawer(
                     onClick = {
                         selectedItemIndex=2
                         closeDrawer()
+                        onActions(NavDrawerAction.OnLogoutClick)
 
                     },
                     icon = {

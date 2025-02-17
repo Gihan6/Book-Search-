@@ -23,7 +23,8 @@ import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailScreenRoot
 import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailViewModel
 import com.plcoding.bookpedia.book.prsentation.login.LoginScreenRoot
 import com.plcoding.bookpedia.book.prsentation.login.LoginViewModel
-import com.plcoding.bookpedia.book.prsentation.nav_drawer.AppNavGraph
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.AppNavGraphRoot
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.NavDrawerViewModel
 import com.plcoding.bookpedia.book.prsentation.register.RegisterScreenRoot
 import com.plcoding.bookpedia.book.prsentation.register.RegisterViewModel
 import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashScreenRoot
@@ -63,10 +64,18 @@ fun App() {
                 composable<Route.Navigation> {
                     val selectedBookViewModel =
                         it.sharedKoinViewModel<SelectBookViewModel>(navController)
-                    AppNavGraph(goToBookDetail = { book ->
+                    val viewModel = koinViewModel<NavDrawerViewModel>()
+
+                    AppNavGraphRoot(
+                        viewModel=viewModel,
+                        goToBookDetail = { book ->
                         selectedBookViewModel.onSelectedBook(book)
                         navController.navigate(Route.BookDetail(book.id))
-                    })
+                    },
+                        logOut = {
+                            navController.navigate(Route.Login)
+                        }
+                    )
                 }
                 composable<Route.BookDetail>(enterTransition = {
                     slideInHorizontally { initialOfSet ->

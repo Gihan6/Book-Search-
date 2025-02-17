@@ -1,4 +1,4 @@
-package com.plcoding.bookpedia.book.prsentation.nav_drawer
+package com.plcoding.bookpedia.book.prsentation.nav_drawer.component
 
 import androidx.navigation.NavHostController
 import com.plcoding.bookpedia.app.Route

@@ -43,4 +43,9 @@ class UserRepository(
       val loggedInUser=localDatabase.selectUserLogin()?.toUser()
        return Result.Success(loggedInUser)
     }
+
+    override suspend fun logout(email: String): EmptyResult<DataError.Local> {
+       localDatabase.logOut(email)
+        return Result.Success(Unit)
+    }
 }

@@ -9,5 +9,6 @@ interface UserRepo {
     suspend fun register(user: User):EmptyResult<DataError.Local>
     suspend fun login(email:String,password:String): Result<User?, DataError.Local>
     suspend fun getLoginUser():Result<User?,DataError.Local>
+    suspend fun logout(email: String):EmptyResult<DataError.Local>
 
 }

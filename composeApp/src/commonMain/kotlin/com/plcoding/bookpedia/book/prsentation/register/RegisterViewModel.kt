@@ -5,6 +5,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import cmp_bookpedia.composeapp.generated.resources.Res
 import cmp_bookpedia.composeapp.generated.resources.please_enter_complete_data
+import com.plcoding.bookpedia.app.Utils.Companion.loginUser
 import com.plcoding.bookpedia.book.domaine.User
 import com.plcoding.bookpedia.book.domaine.UserRepo
 import com.plcoding.bookpedia.core.domain.onError
@@ -55,11 +56,14 @@ class RegisterViewModel(private val repository: UserRepo) : ViewModel() {
     private fun register(newUser: User){
         viewModelScope.launch {
             repository.register(newUser).onSuccess {
+                loginUser =newUser
                 _state.update {
                     it.copy(
                         isLoading = false,
                         registerSuccess = true
                     )
+
+
                 }
             }.onError {error ->
                 _state.update {

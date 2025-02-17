@@ -22,4 +22,9 @@ interface UserDao {
     @Query("UPDATE UserEntity SET isLogin = true WHERE email = :email")
     suspend fun updateUserLogin(email: String)
 
+    @Query("UPDATE UserEntity SET isLogin = false WHERE email = :email")
+    suspend fun logOut(email: String)
+
+
+
 }

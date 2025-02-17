@@ -13,6 +13,7 @@ import com.plcoding.bookpedia.book.prsentation.SelectBookViewModel
 import com.plcoding.bookpedia.book.prsentation.book_detail.BookDetailViewModel
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListViewModel
 import com.plcoding.bookpedia.book.prsentation.login.LoginViewModel
+import com.plcoding.bookpedia.book.prsentation.nav_drawer.NavDrawerViewModel
 import com.plcoding.bookpedia.book.prsentation.register.RegisterViewModel
 import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashViewModel
 import com.plcoding.bookpedia.core.data.HttpClientFactory
@@ -45,6 +46,7 @@ val shareModule= module {
     viewModelOf(::SplashViewModel)
     viewModelOf(::RegisterViewModel)
     viewModelOf(::LoginViewModel)
+    viewModelOf(::NavDrawerViewModel)
 
 
 
