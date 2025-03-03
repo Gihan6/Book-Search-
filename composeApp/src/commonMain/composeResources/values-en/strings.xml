@@ -39,7 +39,7 @@
     <string name="ok">OK</string>
     <string name="alert">Alert</string>
     <string name="user_not_have_account">Email Or Password is Wrong</string>
-    <string name="user_icon">User Icon</string>
+    <string name="user_icon">User</string>
     <string name="logout">LogOut</string>
     <string name="home">Home</string>
     <string name="setting">Setting</string>
@@ -49,6 +49,14 @@
     <string name="edit_icon">Edit</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="change_password">Change Password </string>
-
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="permission_require">Permission Required"</string>
+    <string name="dialog_message_for_load_image_permission">To set your profile picture, please grant this permission. You can manage permissions in your device settings.</string>
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="language">Language</string>
 
 </resources>

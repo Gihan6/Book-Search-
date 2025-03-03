@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cmp_bookpedia.composeapp.generated.resources.Res
 import cmp_bookpedia.composeapp.generated.resources.camera
 import cmp_bookpedia.composeapp.generated.resources.camera_icon
@@ -56,53 +57,57 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun UserProfileScreenRoot() {
+fun UserProfileScreenRoot(viewModel: UserProfileViewModel) {
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    UserProfileScreen(
+        state = state,
+        onAction = { action ->
+            viewModel.onAction(action)
+        }
+    )
 
 
 }
 
 @Composable
-fun UserProfileScreen(modifier: Modifier = Modifier) {
-    var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
-    var onImageClick by remember { mutableStateOf(false) }
-
-
-
+fun UserProfileScreen(
+    modifier: Modifier = Modifier,
+    state: UserProfileState,
+    onAction: (UserProfileAction) -> Unit
+) {
 
     Box(modifier.fillMaxSize().background(DesertWhite).padding(10.dp)) {
         Column(modifier = modifier.fillMaxWidth()) {
-            if (onImageClick){
-                PicImageFromGallery{
-                    imageBitmap=it
-                    onImageClick=true
-
+            if (state.isOpenCamera) {
+                PicImageFromGallery {
+                    onAction(UserProfileAction.OnImageSelected(it))
                 }
-
             }
 
             Spacer(modifier = Modifier.height(150.dp))
             Box(modifier = modifier.align(Alignment.CenterHorizontally)) {
-                if (imageBitmap==null){
-                        Image(
+                if (state.imageBitmap == null) {
+                    Image(
                         painter = painterResource(Res.drawable.user),
                         contentDescription = stringResource(Res.string.user_icon),
                         modifier = modifier.align(Alignment.Center).size(140.dp).padding(7.dp)
                     )
 
-                }else{
+                } else {
                     Image(
-                        bitmap = imageBitmap!!,
+                        bitmap = state.imageBitmap!!,
                         contentDescription = "Profile",
                         modifier = Modifier.size(140.dp).clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
-                    onImageClick=false
+
                 }
 
                 IconButton(
                     modifier = modifier.align(Alignment.BottomEnd).size(60.dp).padding(5.dp),
                     onClick = {
-                            onImageClick=true
+                        onAction(UserProfileAction.OnCameraClick(!state.isOpenCamera))
                     }
                 ) {
                     Image(
@@ -115,7 +120,7 @@ fun UserProfileScreen(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(30.dp))
 
             Text(
-                text = "Gihan Abd elnaser",
+                text = state.user?.name ?: "",
                 color = DarkBlue,
                 style = TextStyle(
                     fontSize = 22.sp,
@@ -144,7 +149,7 @@ fun UserProfileScreen(modifier: Modifier = Modifier) {
                     .align(Alignment.CenterHorizontally)
             ) {
                 Text(
-                    text = "gihan@gmail.com",
+                    text = state.user?.email ?: "",
                     style = TextStyle(
                         fontSize = 22.sp,
                         textAlign = TextAlign.Center,

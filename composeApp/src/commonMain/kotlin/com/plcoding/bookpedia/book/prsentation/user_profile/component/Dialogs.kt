@@ -31,9 +31,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import cmp_bookpedia.composeapp.generated.resources.Res
 import cmp_bookpedia.composeapp.generated.resources.camera
+import cmp_bookpedia.composeapp.generated.resources.camera_icon
 import cmp_bookpedia.composeapp.generated.resources.gallery
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -68,7 +70,7 @@ fun ImageSourceOptionDialog(
                     painter = painterResource(Res.drawable.camera),
                     contentDescription = null
                 )
-                Text(text = "Camera", color = MaterialTheme.colorScheme.onSurface)
+                Text(text = stringResource(Res.string.camera), color = MaterialTheme.colorScheme.onSurface)
             }
             Row(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 15.dp).clickable {
@@ -82,7 +84,7 @@ fun ImageSourceOptionDialog(
                     painter = painterResource(Res.drawable.gallery),
                     contentDescription = null
                 )
-                Text(text = "Gallery", color = MaterialTheme.colorScheme.onSurface)
+                Text(text = stringResource(Res.string.gallery), color = MaterialTheme.colorScheme.onSurface)
             }
         }
     }

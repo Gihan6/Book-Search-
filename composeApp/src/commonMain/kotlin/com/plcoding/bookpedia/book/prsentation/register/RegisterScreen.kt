@@ -113,7 +113,8 @@ fun RegisterScreen(modifier: Modifier, state: RegisterState, onAction: (Register
                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
                 contentDescription = stringResource(Res.string.go_back),
                 tint = DarkBlue,
-                modifier = Modifier.align(Alignment.Start).clickable(
+                modifier = Modifier.align(Alignment.Start)
+                    .padding(top=40.dp).clickable(
                     enabled = true,
                     onClick = {
                         onAction(RegisterActions.OnBackPress)

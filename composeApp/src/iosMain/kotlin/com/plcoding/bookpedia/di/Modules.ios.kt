@@ -1,6 +1,8 @@
 package com.plcoding.bookpedia.di
 
 import com.plcoding.bookpedia.book.data.database.DataBaseFactory
+import com.plcoding.bookpedia.core.data.createDataStore
+import com.plcoding.bookpedia.core.domain.Localization
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.darwin.Darwin
 import org.koin.core.module.Module
@@ -11,6 +13,8 @@ actual val platformModule: Module
         single <HttpClientEngine>{
             Darwin.create()
         }
-
         single { DataBaseFactory() }
+        single<Localization> { Localization() }
+
+        single {   createDataStore() }
     }

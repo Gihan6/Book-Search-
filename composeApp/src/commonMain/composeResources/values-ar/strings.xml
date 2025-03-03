@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<resources>
+    <string name="app_name">ابحث عن كتاب</string>
+    <string name="search_hint">...بحث</string>
+    <string name="close_icon">اغلاق</string>
+    <string name="search_icon">ايقونه البحث </string>
+    <string name="search_result">نتيجه البحث </string>
+    <string name="favourite">المفضله</string>
+    <string name="no_search_result">عفوًا، لا يوجد كتاب بحث لاستعلامك </string>
+    <string name="no_saved_result">عفوًا، لم تقم بحفظ أي كتب بعد</string>
+    <string name="error_disk_full">عفوًا، يبدو أن القرص الخاص بك ممتلئ..</string>
+    <string name="error_unknown">عفوًا، حدث خطأ ما</string>
+    <string name="error_request_time_out">انتهت مهلة الطلب</string>
+    <string name="error_no_internet">تعذر الوصول إلى الخادم، يرجى التحقق من الاتصال بالإنترنت</string>
+    <string name="error_to_many_requests"> يبدو أن حصتك قد تم تجاوزها</string>
+    <string name="user_already_exist">المستخدم موجود بالفعل</string>
+    <string name="error_serializations">تعذر تحليل البيانات</string>
+    <string name="book_cover">غلاف الكتاب</string>
+    <string name="rating"> التقيم</string>
+    <string name="languages">اللغات</string>
+    <string name="pages">الصفحات</string>
+    <string name="synopsis">ملخص</string>
+    <string name="description_not_available">الوصف غير متوفر</string>
+    <string name="go_back">عُد</string>
+    <string name="mark_as_favourite">وضع علامة كمفضل</string>
+    <string name="remove_from_favourite">ازاله من المفضله</string>
+    <string name="logo_icon">Logo Icon</string>
+    <string name="email">الايميل</string>
+    <string name="phone">الهاتف</string>
+    <string name="full_name">الاسم بالكامل</string>
+    <string name="password">كلمه المرور</string>
+    <string name="login_to_your_account">تسجيل الدخول الي حسابك </string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="not_have_account">ليس لديك حساب ؟</string>
+    <string name="sign_up">انشاء حساب</string>
+    <string name="create_your_account">قم بانشاء حسابك </string>
+    <string name="please_enter_complete_data">من فضلك قم بادخال جميع البيانات</string>
+    <string name="ok">تم</string>
+    <string name="alert">تحذير</string>
+    <string name="user_not_have_account">الايميل او كلمه المرور غير صحيحه </string>
+    <string name="user_icon">المستخدم</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="home">الرئيسيه</string>
+    <string name="setting">الاعدادات</string>
+    <string name="menu">القائمه </string>
+    <string name="book_list">الرئيسيه</string>
+    <string name="camera_icon">ايقونه الكاميرا</string>
+    <string name="edit_icon">تعديل</string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="change_password">تغير كلمه المرور</string>
+    <string name="camera">كاميرا</string>
+    <string name="gallery">معرض</string>
+    <string name="permission_require">الإذن مطلوب</string>
+    <string name="dialog_message_for_load_image_permission">لتعيين صورة ملفك الشخصي، يرجى منح هذا الإذن. يمكنك إدارة الأذونات في إعدادات جهازك.</string>
+    <string name="cancel">الغاء</string>
+    <string name="back">رجوع</string>
+    <string name="english">الانجليزيه</string>
+    <string name="arabic">العربيه</string>
+    <string name="language">اللغه</string>
+
+</resources>

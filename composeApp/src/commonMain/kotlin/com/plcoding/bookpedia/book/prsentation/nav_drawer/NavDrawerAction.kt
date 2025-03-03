@@ -8,5 +8,6 @@ sealed interface NavDrawerAction {
     data object OnHomeClick:NavDrawerAction
     data object OnLogoutClick:NavDrawerAction
     data class OnBookClick(val book:Book):NavDrawerAction
+    data object OnChangeLanguage:NavDrawerAction
 
 }

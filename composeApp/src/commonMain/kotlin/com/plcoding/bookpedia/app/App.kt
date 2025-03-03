@@ -6,9 +6,17 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
@@ -27,118 +35,153 @@ import com.plcoding.bookpedia.book.prsentation.nav_drawer.AppNavGraphRoot
 import com.plcoding.bookpedia.book.prsentation.nav_drawer.NavDrawerViewModel
 import com.plcoding.bookpedia.book.prsentation.register.RegisterScreenRoot
 import com.plcoding.bookpedia.book.prsentation.register.RegisterViewModel
+import com.plcoding.bookpedia.book.prsentation.setting.Language
 import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashScreenRoot
 import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashViewModel
+import com.plcoding.bookpedia.core.domain.Localization
+import kotlinx.coroutines.flow.map
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
 fun App() {
+    val prefs = koinInject<DataStore<Preferences>>()
 
-    MaterialTheme {
-        val navController = rememberNavController()
-        NavHost(
-            navController = navController, startDestination = Route.BookGraph
-        ) {
-            navigation<Route.BookGraph>(startDestination = Route.SplashScreen) {
+    val language by prefs
+        .data
+        .map {
+            val languageKey = stringPreferencesKey("language")
+            it[languageKey]
+        }.collectAsState(Language.English.iso)
 
-                composable<Route.SplashScreen>(enterTransition = {
-                    slideInVertically { initialOfSet ->
-                        initialOfSet
-                    }
-                }, exitTransition = {
-                    slideOutVertically { initialOfSet ->
-                        initialOfSet
-                    }
-                }) {
-                    val viewModel = koinViewModel<SplashViewModel>()
-                    SplashScreenRoot(viewModel = viewModel, navToMain = {
-                        navController.navigate(Route.Navigation)
-                    }, navToLogin = {
-                        navController.navigate(Route.Login)
-                    })
-
-                }
-
-                composable<Route.Navigation> {
-                    val selectedBookViewModel =
-                        it.sharedKoinViewModel<SelectBookViewModel>(navController)
-                    val viewModel = koinViewModel<NavDrawerViewModel>()
-
-                    AppNavGraphRoot(
-                        viewModel=viewModel,
-                        goToBookDetail = { book ->
-                        selectedBookViewModel.onSelectedBook(book)
-                        navController.navigate(Route.BookDetail(book.id))
-                    },
-                        logOut = {
-                            navController.navigate(Route.Login)
-                        }
-                    )
-                }
-                composable<Route.BookDetail>(enterTransition = {
-                    slideInHorizontally { initialOfSet ->
-                        initialOfSet
-                    }
-                }, exitTransition = {
-                    slideOutHorizontally { initialOfSet ->
-                        initialOfSet
-                    }
-                }) {
-                    val selectedBookViewModel =
-                        it.sharedKoinViewModel<SelectBookViewModel>(navController)
-                    val selectedBook by selectedBookViewModel.selectedBook.collectAsStateWithLifecycle()
-                    val viewModel = koinViewModel<BookDetailViewModel>()
-
-                    LaunchedEffect(selectedBook) {
-                        selectedBook?.let { book ->
-                            viewModel.onAction(BookDetailAction.OnBookChange(book))
-                        }
-                    }
-                    BookDetailScreenRoot(viewModel = viewModel, onBackClick = {
-                        navController.navigateUp()
-                    })
-                }
-                composable<Route.Login>(enterTransition = {
-                    slideInHorizontally { initialOfSet ->
-                        initialOfSet
-                    }
-                }, exitTransition = {
-                    slideOutHorizontally { initialOfSet ->
-                        initialOfSet
-                    }
-                }) {
-
-                    val viewModel = koinViewModel<LoginViewModel>()
-                    LoginScreenRoot(viewModel = viewModel, navigateToRegister = {
-                        navController.navigate(Route.Register)
-                    }, navigateToMain = {
-                        navController.navigate(Route.Navigation)
-                    })
-                }
-                composable<Route.Register>(enterTransition = {
-                    slideInHorizontally { initialOfSet ->
-                        initialOfSet
-                    }
-                }, exitTransition = {
-                    slideOutHorizontally { initialOfSet ->
-                        initialOfSet
-                    }
-                }) {
-                    val viewModel = koinViewModel<RegisterViewModel>()
-                    RegisterScreenRoot(viewModel = viewModel, onBackClick = {
-                        navController.navigateUp()
-                    }, navigateToMain = {
-                        navController.navigate(Route.Navigation)
-                    })
-                }
-
-            }
-        }
-
+   val direction = if (language==Language.Arabic.iso){
+        LayoutDirection.Rtl
+    }else{
+        LayoutDirection.Ltr
     }
 
+
+    CompositionLocalProvider(LocalLayoutDirection provides direction) {
+
+        MaterialTheme {
+            //------Apply Select Language----------
+            val localization = koinInject<Localization>()
+
+            if (language==Language.Arabic.iso){
+                localization.applyLanguage(Language.Arabic.iso)
+            }else {
+                localization.applyLanguage(Language.English.iso)
+            }
+            //-------------------------------------
+
+            val navController = rememberNavController()
+            NavHost(
+                navController = navController, startDestination = Route.BookGraph
+            ) {
+                navigation<Route.BookGraph>(startDestination = Route.SplashScreen) {
+
+                    composable<Route.SplashScreen>(enterTransition = {
+                        slideInVertically { initialOfSet ->
+                            initialOfSet
+                        }
+                    }, exitTransition = {
+                        slideOutVertically { initialOfSet ->
+                            initialOfSet
+                        }
+                    }) {
+                        val viewModel = koinViewModel<SplashViewModel>()
+                        SplashScreenRoot(viewModel = viewModel, navToMain = {
+                            navController.navigate(Route.Navigation)
+                        }, navToLogin = {
+                            navController.navigate(Route.Login)
+                        })
+
+                    }
+
+                    composable<Route.Navigation> {
+                        val selectedBookViewModel =
+                            it.sharedKoinViewModel<SelectBookViewModel>(navController)
+                        val viewModel = koinViewModel<NavDrawerViewModel>()
+
+                        AppNavGraphRoot(
+                            viewModel = viewModel,
+                            goToBookDetail = { book ->
+                                selectedBookViewModel.onSelectedBook(book)
+                                navController.navigate(Route.BookDetail(book.id))
+                            },
+                            logOut = {
+                                navController.navigate(Route.Login)
+                            },
+                            changeAppLanguage = {
+                                navController.navigate(Route.SplashScreen)
+                            }
+                        )
+                    }
+                    composable<Route.BookDetail>(enterTransition = {
+                        slideInHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    }, exitTransition = {
+                        slideOutHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    }) {
+                        val selectedBookViewModel =
+                            it.sharedKoinViewModel<SelectBookViewModel>(navController)
+                        val selectedBook by selectedBookViewModel.selectedBook.collectAsStateWithLifecycle()
+                        val viewModel = koinViewModel<BookDetailViewModel>()
+
+                        LaunchedEffect(selectedBook) {
+                            selectedBook?.let { book ->
+                                viewModel.onAction(BookDetailAction.OnBookChange(book))
+                            }
+                        }
+                        BookDetailScreenRoot(viewModel = viewModel, onBackClick = {
+                            navController.navigateUp()
+                        })
+                    }
+                    composable<Route.Login>(enterTransition = {
+                        slideInHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    }, exitTransition = {
+                        slideOutHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    }) {
+
+                        val viewModel = koinViewModel<LoginViewModel>()
+                        LoginScreenRoot(viewModel = viewModel, navigateToRegister = {
+                            navController.navigate(Route.Register)
+                        }, navigateToMain = {
+                            navController.navigate(Route.Navigation)
+                        })
+                    }
+                    composable<Route.Register>(enterTransition = {
+                        slideInHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    }, exitTransition = {
+                        slideOutHorizontally { initialOfSet ->
+                            initialOfSet
+                        }
+                    }) {
+                        val viewModel = koinViewModel<RegisterViewModel>()
+                        RegisterScreenRoot(viewModel = viewModel, onBackClick = {
+                            navController.navigateUp()
+                        }, navigateToMain = {
+                            navController.navigate(Route.Navigation)
+                        })
+                    }
+
+                }
+            }
+
+
+        }
+    }
 }
 
 @Composable

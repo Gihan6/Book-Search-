@@ -19,12 +19,26 @@ import com.plcoding.bookpedia.book.prsentation.nav_drawer.AppNavGraph
 import com.plcoding.bookpedia.book.prsentation.nav_drawer.NavDrawerState
 import com.plcoding.bookpedia.book.prsentation.register.RegisterScreen
 import com.plcoding.bookpedia.book.prsentation.register.RegisterState
+import com.plcoding.bookpedia.book.prsentation.setting.SettingScreen
+import com.plcoding.bookpedia.book.prsentation.setting.SettingStates
 import com.plcoding.bookpedia.book.prsentation.user_profile.UserProfileScreen
+import com.plcoding.bookpedia.book.prsentation.user_profile.UserProfileState
 
 @Preview
 @Composable
+fun Setting(){
+    SettingScreen(
+        state = SettingStates(),
+        onAction = {}
+    )
+}
+@Preview
+@Composable
 fun UserProfile(){
-    UserProfileScreen()
+    UserProfileScreen(
+        state = UserProfileState(),
+        onAction = {}
+    )
 }
 @Preview
 @Composable

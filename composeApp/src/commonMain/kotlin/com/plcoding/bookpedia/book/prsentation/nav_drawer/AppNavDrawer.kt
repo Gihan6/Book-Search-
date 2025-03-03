@@ -17,6 +17,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -28,15 +30,23 @@ import com.plcoding.bookpedia.book.domaine.Book
 import com.plcoding.bookpedia.book.prsentation.book_list.BookListAction
 import com.plcoding.bookpedia.book.prsentation.nav_drawer.component.AppDrawer
 import com.plcoding.bookpedia.book.prsentation.nav_drawer.component.AppNavigationActions
+import com.plcoding.bookpedia.book.prsentation.setting.SettingScreenRoot
+import com.plcoding.bookpedia.book.prsentation.setting.SettingViewModel
+import com.plcoding.bookpedia.book.prsentation.splash_screen.SplashViewModel
 import com.plcoding.bookpedia.book.prsentation.user_profile.UserProfileScreen
+import com.plcoding.bookpedia.book.prsentation.user_profile.UserProfileScreenRoot
+import com.plcoding.bookpedia.book.prsentation.user_profile.UserProfileViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppNavGraphRoot(viewModel: NavDrawerViewModel,goToBookDetail:(Book)->Unit,
-                    logOut:()->Unit){
+fun AppNavGraphRoot(
+    viewModel: NavDrawerViewModel,
+    goToBookDetail:(Book)->Unit,
+                    logOut:()->Unit,
+    changeAppLanguage:()->Unit){
     val state by viewModel.state.collectAsStateWithLifecycle()
    if(state.isLogout){
        logOut()
@@ -45,11 +55,13 @@ fun AppNavGraphRoot(viewModel: NavDrawerViewModel,goToBookDetail:(Book)->Unit,
         onAction = {action ->
             when(action){
                 is NavDrawerAction.OnBookClick ->goToBookDetail(action.book)
+                is NavDrawerAction.OnChangeLanguage ->changeAppLanguage()
                 else ->{}
             }
             viewModel.onAction(action)
         },
         state = state
+
     )
 
 }
@@ -131,10 +143,22 @@ fun AppNavGraph(
                 }
 
                 composable<Route.Setting> {
-                    SettingScreen()
+                    val viewModel = koinViewModel<SettingViewModel>()
+
+                    SettingScreenRoot(
+                        viewModel=viewModel,
+                        startApp = {
+                            onAction(NavDrawerAction.OnChangeLanguage)
+
+                        }
+                    )
                 }
                 composable<Route.UserProfile> {
-                    UserProfileScreen()
+                    val viewModel = koinViewModel<UserProfileViewModel>()
+
+                    UserProfileScreenRoot(
+                        viewModel=viewModel
+                    )
                 }
             }
         }

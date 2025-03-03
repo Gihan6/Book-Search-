@@ -7,9 +7,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.ImageBitmap
+import cmp_bookpedia.composeapp.generated.resources.Res
+import cmp_bookpedia.composeapp.generated.resources.cancel
+import cmp_bookpedia.composeapp.generated.resources.dialog_message_for_load_image_permission
+import cmp_bookpedia.composeapp.generated.resources.permission_require
+import cmp_bookpedia.composeapp.generated.resources.setting
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.compose.resources.stringResource
 import shared.PermissionCallback
 import shared.PermissionStatus
 import shared.PermissionType
@@ -98,10 +104,10 @@ fun PicImageFromGallery(setSelectImage: (ImageBitmap?) -> Unit) {
         launchSetting = false
     }
     if (permissionRationalDialog) {
-        AlertMessageDialog(title = "Permission Required",
-            message = "To set your profile picture, please grant this permission. You can manage permissions in your device settings.",
-            positiveButtonText = "Settings",
-            negativeButtonText = "Cancel",
+        AlertMessageDialog(title = stringResource(Res.string.permission_require),
+            message = stringResource(Res.string.dialog_message_for_load_image_permission),
+            positiveButtonText = stringResource(Res.string.setting),
+            negativeButtonText = stringResource(Res.string.cancel),
             onPositiveClick = {
                 permissionRationalDialog = false
                 launchSetting = true
